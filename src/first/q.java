@@ -1,8 +1,16 @@
 package first;
 
+import java.util.Scanner;
+
 public class q {
 
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Enter array length: ");
+        int N = in.nextInt();
+        int[] n = new int[N];
+
         int[] values = new int[5];
 
 
