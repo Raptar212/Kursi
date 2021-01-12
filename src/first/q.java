@@ -3,60 +3,60 @@ package first;
 import java.util.Scanner;
 
 public class q {
+        public static void main(String[] args) {
+            Scanner in = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+            System.out.println("Enter array length: ");
+            int N = in.nextInt();
 
-        System.out.println("Enter array length: ");
-        int N = in.nextInt();
-        int[] n = new int[N];
+            int[] n = new int[N];
 
-        int[] values = new int[5];
+            int identicalNumbersCounter = 0;
+            int identicalNumbersStart   = 0;
+            int identicalNumbersEnd     = 0;
+            int identicalNumber         = 0;
 
+            int newIdenticalNumbersStart = 0;
 
+            System.out.println("Enter array numbers: ");
 
-        for (int i = 0; i < values.length; i++) {
-            values[i] = (int)( Math.round(Math.random()*10) ) - 5;
-        }
-
-        for (int value : values) {
-            System.out.print(value + " ");
-        }
-
-        int maxValue = values[0];
-        int minValue = values[0];
-        int minIndex = 0;
-        int maxIndex = 0;
-
-        for (int i = 0; i < values.length; i++) {
-
-            if (values[i] > maxValue) {
-                maxValue = values[i];
-                maxIndex = i;
+            for (int i = 0; i < N; i++) {
+                System.out.print("n["+i+"]: ");
+                n[i] = in.nextInt();
+                if (i != 0 && n[i] != n[i-1]) {
+                    if (i != 1 && (((i - newIdenticalNumbersStart + 1) == identicalNumbersCounter && (identicalNumber < n[i-1])) || (i - newIdenticalNumbersStart + 1) > identicalNumbersCounter)) {
+                        identicalNumbersStart    = newIdenticalNumbersStart;
+                        identicalNumbersEnd      = i - 1;
+                        identicalNumbersCounter  = identicalNumbersEnd - identicalNumbersStart + 1;
+                        identicalNumber          = n[i-1];
+                        newIdenticalNumbersStart = i;
+                    } else {
+                        newIdenticalNumbersStart = i;
+                    }
+                } else if (i != 1 && (i == N - 1) && (((i - newIdenticalNumbersStart + 1) == identicalNumbersCounter && (identicalNumber < n[i])) || (i - newIdenticalNumbersStart + 1) > identicalNumbersCounter)) {
+                    identicalNumbersStart   = newIdenticalNumbersStart;
+                    identicalNumbersEnd     = i;
+                    identicalNumbersCounter = identicalNumbersEnd - identicalNumbersStart + 1;
+                    identicalNumber         = n[i];
+                }
             }
 
-            if (values[i] < minValue) {
-                minValue = values[i];
-                minIndex = i;
+            System.out.print("\n\n| ");
+            for (int i = 0; i < N; i++) { //
+                System.out.print(n[i] + " | ");
             }
 
+            if (identicalNumbersCounter == 0 || identicalNumbersEnd == 0)
+                System.out.print("\n\nNo identical numbers found." + identicalNumbersEnd); //                                          = 0
+            else {
+                System.out.print("\n\nStart:  " + identicalNumbersStart + "\nEnd:    " + identicalNumbersEnd + "\nLength: " + identicalNumbersCounter + "\nNumber: " + identicalNumber + "\n\n| ");
+                for (int i = identicalNumbersStart; i <= identicalNumbersEnd; i++) {
+                    System.out.print("n["+ i +"]: " + n[i] + " | ");
+                }
+            }
+
+            in.close();
         }
-
-        System.out.println("\nMin value is " + minValue);
-        System.out.println("Max value is " + maxValue);
-        System.out.println("Max index is " + maxIndex);
-        System.out.println("Min index is " + minIndex);
-
-        values[maxIndex] = minValue;
-        values[minIndex] = maxValue;
-
-
-        for (int v : values) {
-            System.out.print(v + " ");
-        }
-
     }
 
-    // Если два элемента максимальное значение, то уменьшить одно из них на 1, если 2 минимальное - увеличить  на 1
 
-}
